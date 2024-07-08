@@ -3,7 +3,7 @@ If (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
   Exit	
 }
 
-# MISCELLANEOUS
+# TELEMETRY
 # disable telemetry
 Reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d "0" /f
 Reg.exe add 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection' /v 'AllowTelemetry' /t REG_DWORD /d '0' /f
@@ -12,7 +12,9 @@ Reg.exe add 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollect
 Reg.exe add "HKLM\SYSTEM\ControlSet001\Control\WMI\Autologger\Diagtrack-Listener" /v "Start" /t REG_DWORD /d "0" /f
 # disable customer experience improvement program
 Reg.exe add "HKLM\SOFTWARE\Microsoft\SQMClient\Windows" /v "CEIPEnable" /t REG_DWORD /d "0" /f
-# advertising & promotional
+
+# MISCELLANEOUS
+# disable advertising & promotional
 Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "ContentDeliveryAllowed" /t REG_DWORD /d "0" /f
 Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "FeatureManagementEnabled" /t REG_DWORD /d "0" /f
 Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "OemPreInstalledAppsEnabled" /t REG_DWORD /d "0" /f
@@ -23,6 +25,37 @@ Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManag
 Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "SilentInstalledAppsEnabled" /t REG_DWORD /d "0" /f
 Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "SoftLandingEnabled" /t REG_DWORD /d "0" /f
 Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "SystemPaneSuggestionsEnabled" /t REG_DWORD /d "0" /f
+
+# SYSTEM
+# disable storage sense
+Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy" /v "StoragePoliciesChanged" /t REG_DWORD /d "1" /f
+Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy" /v "StoragePoliciesNotified" /t REG_DWORD /d "1" /f
+Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy" /v "01" /t REG_DWORD /d "0" /f
+# disable nearby sharing
+Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\CDP" /v "NearShareChannelUserAuthzPolicy" /t REG_DWORD /d "0" /f
+Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\CDP" /v "CdpSessionUserAuthzPolicy" /t REG_DWORD /d "0" /f
+# disable device portal
+Reg.exe add "HKLM\System\ControlSet001\Services\WebManagement" /v "Start" /t REG_DWORD /d "4" /f
+# disable device discovery
+Reg.exe add "HKLM\System\ControlSet001\Services\debugregsvc\Parameters" /v "DebugState" /t REG_DWORD /d "0" /f
+# disable remote desktop
+Reg.exe add "HKLM\System\ControlSet001\Control\Terminal Server" /v "fDenyTSConnections" /t REG_DWORD /d "1" /f
+Reg.exe add "HKLM\System\ControlSet001\Control\Terminal Server" /v "updateRDStatus" /t REG_DWORD /d "0" /f
+# disable clipboard
+Reg.exe add "HKCU\Software\Microsoft\Clipboard" /v "EnableClipboardHistory" /t REG_DWORD /d "0" /f
+Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\SmartActionPlatform\SmartClipboard" /v "Disabled" /t REG_DWORD /d "1" /f
+
+# NETWORK & INTERNET
+# disable allow other network users to control or disable the shared internet connection
+Reg.exe add "HKLM\System\ControlSet001\Control\Network\SharedAccessConnection" /v "EnableControl" /t REG_DWORD /d "0" /f
+
+# APPS
+# disable share across devices
+Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\CDP" /v "RomeSdkChannelUserAuthzPolicy" /t REG_DWORD /d "0" /f
+# disable archive apps
+Reg.exe add "HKLM\Software\Microsoft\Windows\CurrentVersion\InstallService\Stubification\S-1-5-21-2296936333-280572394-256428770-1000" /v "EnableAppOffloading" /t REG_DWORD /d "0" /f
+# disable auto map updates
+Reg.exe add "HKLM\System\Maps" /v "AutoUpdateEnabled" /t REG_DWORD /d "0" /f
 
 # PRIVACY & SECURITY
 # disable let apps show me personalized ads by using my advertising id
@@ -122,33 +155,6 @@ Reg.exe add "HKLM\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessMana
 Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\broadFileSystemAccess" /v "Value" /t REG_SZ /d "Deny" /f
 Reg.exe add "HKLM\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\broadFileSystemAccess" /v "Value" /t REG_SZ /d "Deny" /f
 
-# APPS
-# disable share across devices
-Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\CDP" /v "RomeSdkChannelUserAuthzPolicy" /t REG_DWORD /d "0" /f
-# disable archive apps
-Reg.exe add "HKLM\Software\Microsoft\Windows\CurrentVersion\InstallService\Stubification\S-1-5-21-2296936333-280572394-256428770-1000" /v "EnableAppOffloading" /t REG_DWORD /d "0" /f
-# disable auto map updates
-Reg.exe add "HKLM\System\Maps" /v "AutoUpdateEnabled" /t REG_DWORD /d "0" /f
-
-# SYSTEM
-# disable storage sense
-Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy" /v "StoragePoliciesChanged" /t REG_DWORD /d "1" /f
-Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy" /v "StoragePoliciesNotified" /t REG_DWORD /d "1" /f
-Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy" /v "01" /t REG_DWORD /d "0" /f
-# disable nearby sharing
-Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\CDP" /v "NearShareChannelUserAuthzPolicy" /t REG_DWORD /d "0" /f
-Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\CDP" /v "CdpSessionUserAuthzPolicy" /t REG_DWORD /d "0" /f
-# disable device portal
-Reg.exe add "HKLM\System\ControlSet001\Services\WebManagement" /v "Start" /t REG_DWORD /d "4" /f
-# disable device discovery
-Reg.exe add "HKLM\System\ControlSet001\Services\debugregsvc\Parameters" /v "DebugState" /t REG_DWORD /d "0" /f
-# disable remote desktop
-Reg.exe add "HKLM\System\ControlSet001\Control\Terminal Server" /v "fDenyTSConnections" /t REG_DWORD /d "1" /f
-Reg.exe add "HKLM\System\ControlSet001\Control\Terminal Server" /v "updateRDStatus" /t REG_DWORD /d "0" /f
-# disable clipboard
-Reg.exe add "HKCU\Software\Microsoft\Clipboard" /v "EnableClipboardHistory" /t REG_DWORD /d "0" /f
-Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\SmartActionPlatform\SmartClipboard" /v "Disabled" /t REG_DWORD /d "1" /f
-
 # WINDOWS UPDATE
 # disable delivery optimization
 Reg.exe add "HKU\S-1-5-20\Software\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Settings" /v "DownloadMode" /t REG_DWORD /d "0" /f
@@ -169,6 +175,14 @@ Reg.exe add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SearchSettings" /v "
 # disable cloud search
 Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\SearchSettings" /v "IsAADCloudSearchEnabled" /t REG_DWORD /d "0" /f
 Reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\SearchSettings" /v "IsMSACloudSearchEnabled" /t REG_DWORD /d "0" /f
+# disable web search
+Reg.exe add "HKCU\Software\Policies\Microsoft\Windows\Explorer" /v "DisableSearchBoxSuggestions" /t REG_DWORD /d "1" /f
+
+# WINDOWS DEFENDER
+# disable spynet reporting
+Reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" /v "SpyNetReporting" /t REG_DWORD /d "0" /f
+# disable automatic sample submission
+Reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" /v "SubmitSamplesConsent" /t REG_DWORD /d "2" /f
 
 # SERVICES
 # disable connected user experiences and telemetry service
@@ -182,6 +196,7 @@ Disable-ScheduledTask -TaskName 'Microsoft\Windows\Customer Experience Improveme
 Disable-ScheduledTask -TaskName 'Microsoft\Windows\Customer Experience Improvement Program\UsbCeip' -ErrorAction SilentlyContinue
 # disable application experience features
 Disable-ScheduledTask -TaskName 'Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser' -ErrorAction SilentlyContinue
+Disable-ScheduledTask -TaskName 'Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser Exp' -ErrorAction SilentlyContinue
 Disable-ScheduledTask -TaskName 'Microsoft\Windows\Application Experience\ProgramDataUpdater' -ErrorAction SilentlyContinue
 # disable disk diagnostic data collector
 Disable-ScheduledTask -TaskName 'Microsoft\Windows\DiskDiagnostic\Microsoft-Windows-DiskDiagnosticDataCollector' -ErrorAction SilentlyContinue
