@@ -4,7 +4,7 @@ This script is disables telemetry features in Windows 11, aimed at enhancing pri
 
 ## Features
 - Disable Windows user experience telemetry, diagnostic data, activity and clipboard history, app launch tracking, targeted ads.
-- Disable telemetry of third-party Microsoft apps (E.g. Microsoft Edge, Microsoft Office, Microsoft Copilot)
+- Disable telemetry of Microsoft Edge, Windows Search, Windows Update.
 
 ## Future Plans
 - Enhancing documentation so you can easily understand and use the script.
