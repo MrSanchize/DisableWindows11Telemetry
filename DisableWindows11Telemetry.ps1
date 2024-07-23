@@ -213,17 +213,16 @@ Reg.exe add "HKLM\SYSTEM\ControlSet001\Services\DiagTrack" /v "Start" /t REG_DWO
 Reg.exe add "HKLM\SYSTEM\ControlSet001\Services\dmwappushservice" /v "Start" /t REG_DWORD /d "4" /f
 
 # SCHEDULED TASKS
-# disable customer experience improvement program features
-Disable-ScheduledTask -TaskName 'Microsoft\Windows\Customer Experience Improvement Program\Consolidator' -ErrorAction SilentlyContinue
-Disable-ScheduledTask -TaskName 'Microsoft\Windows\Customer Experience Improvement Program\UsbCeip' -ErrorAction SilentlyContinue
-# disable application experience features
-Disable-ScheduledTask -TaskName 'Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser' -ErrorAction SilentlyContinue
-Disable-ScheduledTask -TaskName 'Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser Exp' -ErrorAction SilentlyContinue
-Disable-ScheduledTask -TaskName 'Microsoft\Windows\Application Experience\ProgramDataUpdater' -ErrorAction SilentlyContinue
-# disable disk diagnostic data collector
-Disable-ScheduledTask -TaskName 'Microsoft\Windows\DiskDiagnostic\Microsoft-Windows-DiskDiagnosticDataCollector' -ErrorAction SilentlyContinue
-# disable autochk proxy
-Disable-ScheduledTask -TaskName 'Microsoft\Windows\Autochk\Proxy' -ErrorAction SilentlyContinue
+# remove all scheduled tasks
+$tasks = Get-ScheduledTask -TaskPath '*'
+
+foreach ($task in $tasks) {
+    if ($task.TaskName -ne 'SvcRestartTask' -and $task.TaskName -ne 'MsCtfMonitor') {
+        # if the task isn't 'SvcRestartTask' or 'MsCtfMonitor', stop it and unregister it
+        Stop-ScheduledTask -TaskName $task.TaskName -ErrorAction SilentlyContinue
+        Unregister-ScheduledTask -TaskName $task.TaskName -Confirm:$false -ErrorAction SilentlyContinue
+    }
+}
 Clear-Host
 
 # HOSTS
